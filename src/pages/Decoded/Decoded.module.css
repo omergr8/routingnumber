@@ -1,0 +1,72 @@
+.main {
+  margin-top: 100px;
+  background-image: url("../../Assets/background.png");
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+.main h1 {
+  font-size: 25px;
+  font-weight: 450;
+}
+.main h1 span {
+  font-style: italic;
+}
+.border {
+  background-color: #fff0e8 !important;
+  border-color: transparent !important;
+  border-radius: 30px !important;
+  min-height: 150px !important;
+  width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.grid {
+  padding-top: 10px;
+}
+.firstP {
+  font-size: 30px !important;
+  line-height: 10px;
+  color: #4d4d4db9;
+}
+.secondP {
+  font-size: 18px !important;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #8f8e8e;
+}
+.downloadButton Button {
+  border-radius: 50px !important;
+  background-color: #ff4f63 !important;
+  color: white !important;
+  width: 180px !important;
+  font-size: 17px !important;
+  text-transform: none !important;
+  margin-top: 25px !important;
+}
+.scanButton Button {
+  color: #ff4f63 !important;
+  font-size: 17px !important;
+  text-transform: none !important;
+  margin-top: 5px !important;
+}
+.mobileBorder {
+  display: none;
+}
+@media only screen and (max-width: 480px) {
+  .border {
+    display: none;
+  }
+  .mobileBorder {
+    display: block;
+    background-color: #fff0e8 !important;
+    border-color: transparent !important;
+    border-radius: 30px !important;
+    min-height: 150px !important;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .firstP {
+    font-size: 25px !important;
+  }
+}

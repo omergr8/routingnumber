@@ -1,0 +1,49 @@
+.main {
+  margin-top: 100px;
+  background-image: url("../../Assets/background.png");
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+.container {
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+}
+.chooseFileButton {
+  border-radius: 50px !important;
+  background-color: #ff4f63 !important;
+  color: white !important;
+  width: 250px !important;
+  font-size: 17px !important;
+  text-transform: none !important;
+  margin-top: 30px !important;
+}
+.bottomText {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  font-size: 15px;
+  margin-top: 10px;
+  margin-left: 25px;
+}
+.left {
+  text-align: left;
+}
+.left h2 {
+  font-size: 30px;
+  font-weight: 500;
+  color: #455151;
+}
+.left p {
+  color: #535353;
+}
+@media only screen and (max-width: 1055px) {
+  .left {
+    text-align: center;
+  }
+  .bottomText {
+    justify-content: center;
+    margin-left: 0px;
+  }
+}
