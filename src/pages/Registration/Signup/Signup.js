@@ -1,10 +1,13 @@
 import classes2 from "./Signup.module.css";
 import RegistrationBar from "../../Common/RegistrationBar/RegistrationBar";
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Redirect } from "react-router-dom";
+import firebaseConfig from "../../../config";
+import { db } from "../../../config";
 import { TextField, Button } from "@material-ui/core";
 import LockIcon from "@material-ui/icons/Lock";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { AuthContext } from "../../../Authentication/Auth";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -15,6 +18,65 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Signup = () => {
   const classes = useStyles();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [currentUserr, setCurrentUserr] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     console.log("i am if");
+  //     return (
+  //       <Redirect
+  //         to={{
+  //           pathname: "/uploadcheque",
+  //           state: "signup",
+  //         }}
+  //       />
+  //     );
+  //   }
+  // }, []);
+  const writeUserData = (userId) => {
+    db.ref("users/" + userId).set({
+      name: name,
+      email: email,
+    });
+  };
+  const handleSubmit = () => {
+    try {
+      firebaseConfig
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((res) => {
+          setCurrentUserr(true);
+          writeUserData(res.user.uid);
+        });
+    } catch (error) {
+      alert(error);
+    }
+  };
+  if (currentUser) {
+    if (currentUserr) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/uploadcheque",
+            state: { reason: "signup successfully" },
+          }}
+        />
+      );
+    } else {
+      return (
+        <Redirect
+          to={{
+            pathname: "/uploadcheque",
+            state: { reason: "redirect" },
+          }}
+        />
+      );
+    }
+  }
+
   return (
     <div>
       <RegistrationBar />
@@ -27,6 +89,7 @@ const Signup = () => {
               id="standard-required"
               defaultValue="Your Name"
               variant="outlined"
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div>
@@ -36,6 +99,8 @@ const Signup = () => {
               id="standard-required"
               defaultValue="Your Email"
               variant="outlined"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
@@ -46,6 +111,8 @@ const Signup = () => {
               defaultValue="Hello World"
               variant="outlined"
               type="password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div>
@@ -53,6 +120,7 @@ const Signup = () => {
               className={classes2.signup}
               size="large"
               variant="contained"
+              onClick={handleSubmit}
             >
               sign up free
             </Button>

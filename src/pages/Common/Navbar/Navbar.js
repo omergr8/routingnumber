@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useRef, useContext } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
+import { AppBar, Toolbar, Snackbar } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import { AuthContext } from "../../../Authentication/Auth";
+import firebaseConfig from "../../../config";
 import {
   Typography,
   Link,
@@ -117,12 +118,25 @@ export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const { currentUser } = useContext(AuthContext);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const handleSignOut = () => {
+    firebaseConfig
+      .auth()
+      .signOut()
+      .then(function () {
+        // Sign-out successful.
+      })
+      .catch(function (error) {
+        // An error happened.
+      });
+  };
   const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    if (currentUser) {
+      setAnchorEl(event.currentTarget);
+    }
   };
 
   const handleMobileMenuClose = () => {
@@ -152,7 +166,7 @@ export default function Navbar() {
     >
       <MenuItem onClick={handleMenuClose}>History</MenuItem>
       <MenuItem onClick={handleMenuClose}>Help</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={handleSignOut}>Logout</MenuItem>
     </Menu>
   );
   const list = (
@@ -164,26 +178,42 @@ export default function Navbar() {
       </div>
       <Grid container justify="center" alignItems="center" spacing={0}>
         <Grid item xs={1}></Grid>
-        <Grid item xs={5}>
-          <Button
-            className={classes.signupButton}
-            size="small"
-            onClick={handleProfileMenuOpen}
-            variant="contained"
-          >
-            Login
-          </Button>
-        </Grid>
-        <Grid item xs={5}>
-          <Button
-            className={classes.signupButton}
-            size="small"
-            onClick={handleProfileMenuOpen}
-            variant="contained"
-          >
-            Sign Up
-          </Button>
-        </Grid>
+        {!currentUser ? (
+          <Grid item xs={5}>
+            <Button
+              className={classes.signupButton}
+              size="small"
+              onClick={handleProfileMenuOpen}
+              variant="contained"
+            >
+              Login
+            </Button>
+          </Grid>
+        ) : null}
+        {!currentUser ? (
+          <Grid item xs={5}>
+            <Button
+              className={classes.signupButton}
+              size="small"
+              onClick={handleProfileMenuOpen}
+              variant="contained"
+            >
+              Sign Up
+            </Button>
+          </Grid>
+        ) : (
+          <Grid item xs={5}>
+            <Button
+              className={classes.signupButton}
+              size="small"
+              onClick={handleSignOut}
+              variant="contained"
+            >
+              Sign Out
+            </Button>
+          </Grid>
+        )}
+
         <Grid item xs={1}></Grid>
       </Grid>
       <List>
@@ -199,7 +229,7 @@ export default function Navbar() {
       </List>
     </div>
   );
-  const mobileMenuId = "primary-search-account-menu-mobile";
+
   const renderMobileMenu = (
     <React.Fragment>
       <Drawer
@@ -229,15 +259,17 @@ export default function Navbar() {
           Security
         </Link>
       </li>
-      <li>
-        <Link
-          className={classes.anchorListLogin}
-          href="#"
-          onClick={preventDefault}
-        >
-          Login
-        </Link>
-      </li>
+      {!currentUser ? (
+        <li>
+          <Link
+            className={classes.anchorListLogin}
+            href="#"
+            onClick={preventDefault}
+          >
+            Login
+          </Link>
+        </li>
+      ) : null}
     </ul>
   );
 
@@ -251,14 +283,26 @@ export default function Navbar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {links}
-            <Button
-              className={classes.signupButton}
-              size="small"
-              onClick={handleProfileMenuOpen}
-              variant="contained"
-            >
-              Sign Up
-            </Button>
+
+            {currentUser ? (
+              <Button
+                className={classes.signupButton}
+                size="small"
+                onClick={handleProfileMenuOpen}
+                variant="contained"
+              >
+                Sign Out
+              </Button>
+            ) : (
+              <Button
+                className={classes.signupButton}
+                size="small"
+                variant="contained"
+                onClick={handleProfileMenuOpen}
+              >
+                Sign In
+              </Button>
+            )}
           </div>
           <div className={classes.sectionMobile}>
             <Button

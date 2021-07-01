@@ -1,7 +1,11 @@
 import classes2 from "./Login.module.css";
 import RegistrationBar from "../../Common/RegistrationBar/RegistrationBar";
-import React from "react";
-import { TextField, Button } from "@material-ui/core";
+import React, { useContext, useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import { AuthContext } from "../../../Authentication/Auth";
+import firebaseConfig from "../../../config";
+import { TextField, Button, Snackbar } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import LockIcon from "@material-ui/icons/Lock";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -13,13 +17,55 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const Login = () => {
+const Login = (props) => {
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errormessage, setErrorMessage] = useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = e.target.elements;
+
+    try {
+      firebaseConfig
+        .auth()
+        .signInWithEmailAndPassword(email.value, password.value)
+        .then(() => {})
+        .catch((error) => {
+          setErrorMessage(error.message);
+          handleClick();
+        });
+    } catch (error) {
+      console.log("error is");
+    }
+  };
+
+  const { currentUser } = useContext(AuthContext);
+
+  if (currentUser) {
+    return <Redirect to="/uploadcheque" />;
+  }
   return (
     <div>
       <RegistrationBar incoming="login" />
       <div className={classes2.form}>
-        <form className={classes.root} noValidate autoComplete="off">
+        <form
+          className={classes.root}
+          onSubmit={handleSubmit}
+          noValidate
+          autoComplete="off"
+        >
           <div>
             <p className={classes2.label}>please enter your email</p>
             <TextField
@@ -27,6 +73,8 @@ const Login = () => {
               id="standard-required"
               defaultValue="Your Email"
               variant="outlined"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
@@ -37,10 +85,17 @@ const Login = () => {
               defaultValue="Hello World"
               variant="outlined"
               type="password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div>
-            <Button className={classes2.login} size="large" variant="contained">
+            <Button
+              className={classes2.login}
+              type="submit"
+              size="large"
+              variant="contained"
+            >
               login
             </Button>
           </div>
@@ -53,6 +108,11 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          {errormessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
