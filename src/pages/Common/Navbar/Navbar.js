@@ -1,12 +1,10 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useContext } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, Snackbar } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
+import { AppBar, Toolbar } from "@material-ui/core";
 import { AuthContext } from "../../../Authentication/Auth";
 import firebaseConfig from "../../../config";
 import {
   Typography,
-  Link,
   Button,
   Drawer,
   ListItemText,
@@ -14,12 +12,11 @@ import {
   List,
   Grid,
 } from "@material-ui/core";
-import Badge from "@material-ui/core/Badge";
+import { Link } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import PersonIcon from "@material-ui/icons/Person";
 import MenuIcon from "@material-ui/icons/Menu";
-import MoreIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -35,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: "15px",
     textTransform: "uppercase",
+    color: "white",
     [theme.breakpoints.up("sm")]: {
       display: "block",
       textTransform: "uppercase",
@@ -226,6 +224,17 @@ export default function Navbar() {
         <ListItem button>
           <ListItemText primary="Security" />
         </ListItem>
+        <ListItem button>
+          <Link
+            to="/chequetable"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            <ListItemText primary="History" />
+          </Link>
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary="Help" />
+        </ListItem>
       </List>
     </div>
   );
@@ -251,7 +260,7 @@ export default function Navbar() {
       </li>
       <li>
         <Link className={classes.anchorList} href="#" onClick={preventDefault}>
-          Glosarry
+          Glossary
         </Link>
       </li>
       <li>
@@ -259,7 +268,17 @@ export default function Navbar() {
           Security
         </Link>
       </li>
-      {!currentUser ? (
+      <li>
+        <Link className={classes.anchorList} to="/chequetable">
+          History
+        </Link>
+      </li>
+      <li>
+        <Link className={classes.anchorList} href="#" onClick={preventDefault}>
+          Help
+        </Link>
+      </li>
+      {/* {!currentUser ? (
         <li>
           <Link
             className={classes.anchorListLogin}
@@ -269,7 +288,7 @@ export default function Navbar() {
             Login
           </Link>
         </li>
-      ) : null}
+      ) : null} */}
     </ul>
   );
 
@@ -277,9 +296,14 @@ export default function Navbar() {
     <div className={classes.grow}>
       <AppBar className={classes.appBar} position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            routingnumbers.ca
-          </Typography>
+          <Link
+            to={currentUser ? "/uploadcheque" : "/routingnumber"}
+            style={{ textDecoration: "none" }}
+          >
+            <Typography className={classes.title} variant="h6" noWrap>
+              routingnumbers.ca
+            </Typography>
+          </Link>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {links}
@@ -288,20 +312,21 @@ export default function Navbar() {
               <Button
                 className={classes.signupButton}
                 size="small"
-                onClick={handleProfileMenuOpen}
                 variant="contained"
+                onClick={handleSignOut}
               >
                 Sign Out
               </Button>
             ) : (
-              <Button
-                className={classes.signupButton}
-                size="small"
-                variant="contained"
-                onClick={handleProfileMenuOpen}
-              >
-                Sign In
-              </Button>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Button
+                  className={classes.signupButton}
+                  size="small"
+                  variant="contained"
+                >
+                  Sign In
+                </Button>
+              </Link>
             )}
           </div>
           <div className={classes.sectionMobile}>

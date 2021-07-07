@@ -1,6 +1,7 @@
 import classes2 from "./Signup.module.css";
 import RegistrationBar from "../../Common/RegistrationBar/RegistrationBar";
 import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import firebaseConfig from "../../../config";
 import { db } from "../../../config";
@@ -87,7 +88,7 @@ const Signup = () => {
             <TextField
               className="inputRounded"
               id="standard-required"
-              defaultValue="Your Name"
+              placeholder="Your Name"
               variant="outlined"
               onChange={(e) => setName(e.target.value)}
             />
@@ -97,7 +98,7 @@ const Signup = () => {
             <TextField
               className="inputRounded"
               id="standard-required"
-              defaultValue="Your Email"
+              placeholder="Your Email"
               variant="outlined"
               name="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -108,7 +109,7 @@ const Signup = () => {
             <TextField
               className="inputRounded"
               id="standard-required"
-              defaultValue="Hello World"
+              placeholder="Hello World"
               variant="outlined"
               type="password"
               name="password"
@@ -126,7 +127,9 @@ const Signup = () => {
             </Button>
           </div>
           <div className={classes2.skip}>
-            <Button>skip for now</Button>
+            <Link to="/routingnumber">
+              <Button>skip for now</Button>
+            </Link>
           </div>
           <div className={classes2.bottomText}>
             <LockIcon style={{ color: "#FF4F63" }} />

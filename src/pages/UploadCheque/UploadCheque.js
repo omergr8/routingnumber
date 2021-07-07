@@ -154,7 +154,13 @@ const UploadCheque = (props) => {
   const changeVisiblityStatus = () => {
     setIsUploadDone(false);
   };
-
+  const handlePreviewIcon = (fileObject) => {
+    console.log(fileObject);
+    const fileName = (
+      <h3 className={classes.fileNameH}>{fileObject.file.name}</h3>
+    );
+    return fileName;
+  };
   return (
     <div>
       {!isuploaddone ? (
@@ -171,6 +177,7 @@ const UploadCheque = (props) => {
                 icon: classes.dropIcon,
               }}
               filesLimit={1}
+              getPreviewIcon={handlePreviewIcon}
               Icon={FiUpload}
               dropzoneText="Drop image file here or"
               onChange={handleChange}

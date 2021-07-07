@@ -8,7 +8,7 @@ import { TextField, Button, Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import LockIcon from "@material-ui/icons/Lock";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -71,7 +71,7 @@ const Login = (props) => {
             <TextField
               className="inputRounded"
               id="standard-required"
-              defaultValue="Your Email"
+              placeholder="Your Email"
               variant="outlined"
               name="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -82,7 +82,7 @@ const Login = (props) => {
             <TextField
               className="inputRounded"
               id="standard-required"
-              defaultValue="Hello World"
+              placeholder="Hello World"
               variant="outlined"
               type="password"
               name="password"
@@ -100,7 +100,9 @@ const Login = (props) => {
             </Button>
           </div>
           <div className={classes2.skip}>
-            <Button>skip for now</Button>
+            <Link to="/routingnumber">
+              <Button>skip for now</Button>
+            </Link>
           </div>
           <div className={classes2.bottomText}>
             <LockIcon style={{ color: "#FF4F63" }} />

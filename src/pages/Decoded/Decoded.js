@@ -71,6 +71,7 @@ const Decoded = (props) => {
   const downloadPdf = () => (
     <div>
       <PDFDownloadLink
+        style={{ textDecoration: "none" }}
         document={
           <MyDoc
             transit={transit}
@@ -117,20 +118,20 @@ const Decoded = (props) => {
             <p className={classes.secondP}>Transit No.</p>
           </Grid>
           <Grid item xs={5} lg={5}>
-            <p className={classes.firstP}>{props.transit_number}</p>
+            <p className={classes.firstP}>{transit}</p>
           </Grid>
           <Grid item xs={7} lg={7}>
             <p className={classes.secondP}>Institution No.</p>
           </Grid>
           <Grid item xs={5} lg={5}>
-            <p className={classes.firstP}>{props.institution_number}</p>
+            <p className={classes.firstP}>{institution}</p>
           </Grid>
           <Grid item xs={7} lg={7}>
             <p className={classes.secondP}>Account No.</p>
           </Grid>
           <Grid item xs={5} lg={5}>
             {" "}
-            <p className={classes.firstP}>{props.account_number}</p>
+            <p className={classes.firstP}>{account}</p>
           </Grid>
         </Grid>
       </div>

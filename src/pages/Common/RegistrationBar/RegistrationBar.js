@@ -1,5 +1,5 @@
 import classes from "./RegistrationBar.module.css";
-
+import { Link } from "react-router-dom";
 const RegistrationBar = (props) => {
   const signup = (
     <>
@@ -8,7 +8,12 @@ const RegistrationBar = (props) => {
       </div>
       <div className={classes.content}>
         <h3>Create new Account</h3>
-        <p>Already Registered? Login</p>
+        <p>
+          Already Registered?{" "}
+          <Link to="/login">
+            <span className={classes.logSign}>Login</span>
+          </Link>
+        </p>
       </div>
     </>
   );
@@ -19,7 +24,12 @@ const RegistrationBar = (props) => {
       </div>
       <div className={classes.content}>
         <h3>Login</h3>
-        <p>Don't have an account yet? Sign up</p>
+        <p>
+          Don't have an account yet?{" "}
+          <Link to="/signup">
+            <span className={classes.logSign}>Sign up</span>
+          </Link>
+        </p>
       </div>
     </>
   );

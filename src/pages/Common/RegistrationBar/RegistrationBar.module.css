@@ -26,7 +26,12 @@
 .content p {
   font-weight: 500 !important;
 }
-
+.logSign {
+  /* font-size: 18px !important; */
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  color: white !important;
+}
 @media only screen and (max-width: 720px) {
   .logo h2 {
     text-align: center;

@@ -61,6 +61,14 @@
   font-size: 15px;
   margin-top: 10px;
 }
+.fileNameH {
+  /* font-size: 10px !important; */
+  /* margin-top: -100px !important;
+  line-height: 20px;
+  margin-left: 130px !important; */
+  margin-left: 130px;
+  margin-top: 0px;
+}
 @media only screen and (max-width: 480px) {
   .dropZone {
     width: 90%;
