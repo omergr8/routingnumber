@@ -84,11 +84,11 @@ const Signup = () => {
       <div className={classes2.form}>
         <form className={classes.root} noValidate autoComplete="off">
           <div>
-            <p className={classes2.label}>please enter your name</p>
+            <p className={classes2.label}>please enter your username</p>
             <TextField
               className="inputRounded"
               id="standard-required"
-              placeholder="Your Name"
+              placeholder="Enter Username"
               variant="outlined"
               onChange={(e) => setName(e.target.value)}
             />
@@ -98,7 +98,7 @@ const Signup = () => {
             <TextField
               className="inputRounded"
               id="standard-required"
-              placeholder="Your Email"
+              placeholder="Enter Email"
               variant="outlined"
               name="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -109,7 +109,7 @@ const Signup = () => {
             <TextField
               className="inputRounded"
               id="standard-required"
-              placeholder="Hello World"
+              placeholder="Enter Password"
               variant="outlined"
               type="password"
               name="password"
@@ -123,7 +123,7 @@ const Signup = () => {
               variant="contained"
               onClick={handleSubmit}
             >
-              sign up free
+              Sign up free
             </Button>
           </div>
           <div className={classes2.skip}>

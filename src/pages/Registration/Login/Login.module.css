@@ -20,7 +20,7 @@
   color: white !important;
   width: 200px !important;
   font-size: 14px !important;
-  text-transform: lowercase !important;
+  text-transform: none !important;
   margin-top: 30px !important;
 }
 .bottomText {

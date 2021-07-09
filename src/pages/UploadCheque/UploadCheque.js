@@ -11,6 +11,8 @@ import {
   Snackbar,
   Backdrop,
   CircularProgress,
+  Modal,
+  Fade,
 } from "@material-ui/core";
 import LockIcon from "@material-ui/icons/Lock";
 import Alert from "@material-ui/lab/Alert";
@@ -24,10 +26,23 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
   },
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    textAlign: "center",
+  },
 }));
 const UploadCheque = (props) => {
   const inputRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const [modalError, setModalError] = useState(false);
   const [chequeres, setChequeRes] = useState([]);
   const [opensuccess, setOpenSuccess] = useState(false);
   const [isuploaddone, setIsUploadDone] = useState(false);
@@ -56,7 +71,7 @@ const UploadCheque = (props) => {
       "December",
     ];
     var dd = today.getDate();
-    var mm = today.getMonth() + 1;
+    var mm = today.getMonth();
     var yyyy = today.getFullYear();
     if (dd < 10) {
       dd = "0" + dd;
@@ -74,7 +89,7 @@ const UploadCheque = (props) => {
       institutionNo: institutionNo,
       transitNumber: transitNo,
     };
-
+    console.log(chequeObject);
     db.ref(`users/${uid}/chequeTable`)
       .push(chequeObject)
       .then((res) => {
@@ -114,6 +129,7 @@ const UploadCheque = (props) => {
       .catch((err) => {
         console.log("err", err, err.response);
         setOpen(false);
+        setModalError(true);
       });
   };
   useEffect(() => {
@@ -138,7 +154,11 @@ const UploadCheque = (props) => {
     if (reason === "clickaway") {
       return;
     }
+
     setOpenSuccess(false);
+  };
+  const handleCloseError = (event, reason) => {
+    setModalError(false);
   };
   if (!currentUser) {
     return <Redirect to="/login" />;
@@ -155,12 +175,12 @@ const UploadCheque = (props) => {
     setIsUploadDone(false);
   };
   const handlePreviewIcon = (fileObject) => {
-    console.log(fileObject);
     const fileName = (
       <h3 className={classes.fileNameH}>{fileObject.file.name}</h3>
     );
     return fileName;
   };
+
   return (
     <div>
       {!isuploaddone ? (
@@ -229,10 +249,58 @@ const UploadCheque = (props) => {
           Signup Successfully
         </Alert>
       </Snackbar>
-      <div>
+      {/* <div>
         <Backdrop className={classes2.backdrop} open={open}>
           <CircularProgress color="inherit" />
         </Backdrop>
+      </div> */}
+      <div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes2.modal}
+          open={open}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes2.paper}>
+              <h2 id="transition-modal-title">
+                {" "}
+                <CircularProgress color="inherit" />
+              </h2>
+              <h2 id="transition-modal-description">Uploading...</h2>
+            </div>
+          </Fade>
+        </Modal>
+      </div>
+      <div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes2.modal}
+          open={modalError}
+          onClose={handleCloseError}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 1000,
+          }}
+        >
+          <Fade in={modalError}>
+            <div className={classes2.paper}>
+              <h2 id="transition-modal-title">
+                <Alert severity="error">Could not get routing info</Alert>
+              </h2>
+              <h2 id="transition-modal-description">
+                Please try again. Make sure the cheque is on a dark background!
+              </h2>
+            </div>
+          </Fade>
+        </Modal>
       </div>
     </div>
   );

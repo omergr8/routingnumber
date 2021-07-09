@@ -71,7 +71,7 @@ const Login = (props) => {
             <TextField
               className="inputRounded"
               id="standard-required"
-              placeholder="Your Email"
+              placeholder="Enter Email"
               variant="outlined"
               name="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -82,7 +82,7 @@ const Login = (props) => {
             <TextField
               className="inputRounded"
               id="standard-required"
-              placeholder="Hello World"
+              placeholder="Enter Password"
               variant="outlined"
               type="password"
               name="password"
@@ -96,7 +96,7 @@ const Login = (props) => {
               size="large"
               variant="contained"
             >
-              login
+              Login
             </Button>
           </div>
           <div className={classes2.skip}>
