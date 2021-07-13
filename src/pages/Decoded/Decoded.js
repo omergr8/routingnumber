@@ -34,8 +34,17 @@ const styles = StyleSheet.create({
 const MyDoc = (props) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      <Text style={styles.titleHead}>Cheque Table </Text>
-
+      <Text style={styles.titleHead}>
+        ROUTINGNUMBERS.CA - Free Cheque Scanner
+      </Text>
+      <Text style={styles.textt}>
+        <h2>Date: </h2>
+        {props.fileDate}{" "}
+      </Text>
+      <Text style={styles.textt}>
+        <h2>FileName: </h2>
+        {props.fileName}{" "}
+      </Text>
       <Text style={styles.textt}>
         <h2>Transit Number: </h2>
         {props.transit}{" "}
@@ -57,6 +66,8 @@ const Decoded = (props) => {
   const [transit, setTransit] = useState("");
   const [institution, setInstitution] = useState("");
   const [account, setAccount] = useState("");
+  const [date, setDate] = useState("");
+  const [fileName, setFileName] = useState("");
   if (!currentUser) {
     <Redirect to="/login" />;
   }
@@ -64,6 +75,8 @@ const Decoded = (props) => {
     setTransit(props.chequeResponse.transit_number);
     setInstitution(props.chequeResponse.institution_number);
     setAccount(props.chequeResponse.account_number);
+    setDate(props.fileDate);
+    setFileName(props.fileName);
   }, [props]);
   const scanCheque = () => {
     props.changeVisiblityStatus();
@@ -77,6 +90,8 @@ const Decoded = (props) => {
             transit={transit}
             institution={institution}
             account={account}
+            fileDate={date}
+            fileName={fileName}
           />
         }
         fileName="routing_numbers.pdf"

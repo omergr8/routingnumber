@@ -13,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import classes2 from "./ChequeTable.module.css";
 import { AiOutlineDownload } from "react-icons/ai";
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -47,6 +48,13 @@ const styles = StyleSheet.create({
   titleHead: {
     fontSize: 24,
     textAlign: "center",
+    marginBottom: "30px",
+  },
+  perChequeHead: {
+    fontSize: 20,
+    textAlign: "center",
+    backgroundColor: "#ff4f63",
+    color: "white",
   },
   textt: {
     margin: 12,
@@ -59,7 +67,9 @@ const styles = StyleSheet.create({
 const MyDoc = (props) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      <Text style={styles.titleHead}>Cheque Table </Text>
+      <Text style={styles.titleHead}>
+        ROUTINGNUMBERS.CA - Free Cheque Scanner
+      </Text>
       <Text style={styles.textt}>
         <h2>Date: </h2>
         {props.date}{" "}
@@ -80,6 +90,41 @@ const MyDoc = (props) => (
         <h2>Account Number: </h2>
         {props.account}{" "}
       </Text>
+    </Page>
+  </Document>
+);
+const MyDoc2 = (props) => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      <Text style={styles.titleHead}>
+        ROUTINGNUMBERS.CA - Free Cheque Scanner
+      </Text>
+
+      {props.tableObject.map((data, index) => (
+        <>
+          <Text style={styles.perChequeHead}>{data.name}</Text>
+          <Text style={styles.textt}>
+            <h2>Date: </h2>
+            {data.uploadDate}{" "}
+          </Text>
+          <Text style={styles.textt}>
+            <h2>FileName: </h2>
+            {data.name}{" "}
+          </Text>
+          <Text style={styles.textt}>
+            <h2>Transit Number: </h2>
+            {data.transitNumber}{" "}
+          </Text>
+          <Text style={styles.textt}>
+            <h2>Institution Number: </h2>
+            {data.institutionNo}{" "}
+          </Text>
+          <Text style={styles.textt}>
+            <h2>Account Number: </h2>
+            {data.accountNumber}{" "}
+          </Text>
+        </>
+      ))}
     </Page>
   </Document>
 );
@@ -109,6 +154,28 @@ const downloadPdf = (date, file, transit, institution, account) => (
     >
       {({ blob, url, loading, error }) =>
         loading ? "Loading document..." : iconButton
+      }
+    </PDFDownloadLink>
+  </div>
+);
+const exportAll = (
+  <Button variant="contained" className={classes2.exportAll}>
+    Export All
+  </Button>
+);
+const downloadCompletePdf = (tableObject) => (
+  <div>
+    <PDFDownloadLink
+      document={<MyDoc2 tableObject={tableObject} />}
+      fileName="routing_numbers.pdf"
+      style={{ textDecoration: "none" }}
+    >
+      {({ blob, url, loading, error }) =>
+        loading ? (
+          <p style={{ color: "black" }}>"Loading document..."</p>
+        ) : (
+          exportAll
+        )
       }
     </PDFDownloadLink>
   </div>
@@ -155,7 +222,10 @@ const ChequeTable = () => {
   return (
     <div className={classes2.main}>
       <div className={classes2.cheque}>
-        <h2>Your decoded cheques</h2>
+        <div className={classes2.flex}>
+          <h2>Your decoded cheques</h2>
+          {downloadCompletePdf(chequedata)}
+        </div>
         <div>
           <TableContainer className={classes.tableContainer} component={Paper}>
             <Table className={classes.table} aria-label="simple table">

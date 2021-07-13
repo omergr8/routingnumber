@@ -1,10 +1,15 @@
 .main {
   margin-top: 120px;
+  margin-bottom: 50px;
 }
 .cheque {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
 }
 .mobileButton {
   color: #ff4f63 !important;
@@ -74,7 +79,12 @@
   margin-left: auto;
   margin-right: auto;
 }
-
+.exportAll {
+  background-color: #ff4f63 !important;
+  color: white !important;
+  text-decoration: none !important;
+  margin-top: 30px;
+}
 @media only screen and (max-width: 480px) {
   .mobileTable {
     display: block;

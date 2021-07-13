@@ -44,6 +44,7 @@ const Login = (props) => {
         .then(() => {})
         .catch((error) => {
           setErrorMessage(error.message);
+          console.log(error);
           handleClick();
         });
     } catch (error) {
@@ -110,9 +111,15 @@ const Login = (props) => {
           </div>
         </form>
       </div>
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+      <Snackbar open={open} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
-          {errormessage}
+          {errormessage ===
+          "The password is invalid or the user does not have a password."
+            ? "Invalid password. Please try again."
+            : errormessage ===
+              "There is no user record corresponding to this identifier. The user may have been deleted."
+            ? "There is no user record corresponding to this identifier. Please double-check your email address and try again."
+            : errormessage}
         </Alert>
       </Snackbar>
     </div>

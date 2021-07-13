@@ -11,9 +11,9 @@ import {
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import LockIcon from "@material-ui/icons/Lock";
-import chequeImage from "../../Assets/test.JPG";
+import chequeImage from "../../Assets/void-cheque.png";
 import Decoded from "../Decoded/Decoded";
-
+import StepCard from "./Components/StepCard";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -184,6 +184,9 @@ const Routingnumber = () => {
             </div>
           </Fade>
         </Modal>
+      </div>
+      <div className={classes.cardDiv}>
+        <StepCard />
       </div>
     </div>
   );

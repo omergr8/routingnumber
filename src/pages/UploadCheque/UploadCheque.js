@@ -45,8 +45,10 @@ const UploadCheque = (props) => {
   const [modalError, setModalError] = useState(false);
   const [chequeres, setChequeRes] = useState([]);
   const [opensuccess, setOpenSuccess] = useState(false);
+  const [opensuccess2, setOpenSuccess2] = useState(false);
   const [isuploaddone, setIsUploadDone] = useState(false);
-  const [isreload, setIsReload] = useState("");
+  const [fileName, setFileName] = useState();
+  const [fileDate, setFileDate] = useState("");
   const { currentUser } = useContext(AuthContext);
   const classes2 = useStyles();
   var uid;
@@ -77,7 +79,7 @@ const UploadCheque = (props) => {
       dd = "0" + dd;
     }
     const dateString = monthNames[mm] + " " + dd + ", " + yyyy;
-
+    setFileDate(dateString);
     const name = fileName;
     const accountNo = data.account_number;
     const institutionNo = data.institution_number;
@@ -157,6 +159,13 @@ const UploadCheque = (props) => {
 
     setOpenSuccess(false);
   };
+  const handleClose2 = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSuccess2(false);
+  };
   const handleCloseError = (event, reason) => {
     setModalError(false);
   };
@@ -165,6 +174,9 @@ const UploadCheque = (props) => {
   }
   function handleChange(file) {
     if (file.length !== 0 && file[0] !== undefined) {
+      setFileName(file[0].path);
+      setOpenSuccess2(true);
+      setOpenSuccess(false);
       uploadcheque(file[0]);
     }
   }
@@ -175,10 +187,10 @@ const UploadCheque = (props) => {
     setIsUploadDone(false);
   };
   const handlePreviewIcon = (fileObject) => {
-    const fileName = (
-      <h3 className={classes.fileNameH}>{fileObject.file.name}</h3>
-    );
-    return fileName;
+    // const fileName = (
+    //   <h3 className={classes.fileNameH}>{fileObject.file.name}</h3>
+    // );
+    return null;
   };
 
   return (
@@ -198,6 +210,7 @@ const UploadCheque = (props) => {
               }}
               filesLimit={1}
               getPreviewIcon={handlePreviewIcon}
+              showAlerts={false}
               Icon={FiUpload}
               dropzoneText="Drop image file here or"
               onChange={handleChange}
@@ -236,24 +249,31 @@ const UploadCheque = (props) => {
           <Decoded
             chequeResponse={chequeres}
             changeVisiblityStatus={changeVisiblityStatus}
+            fileDate={fileDate}
+            fileName={fileName}
           />
         </div>
       )}
-
+      <Snackbar
+        open={opensuccess2}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        onClose={handleClose2}
+      >
+        <Alert onClose={handleClose2} severity="success">
+          File {fileName} successfully added.
+        </Alert>
+      </Snackbar>
       <Snackbar
         open={opensuccess}
         autoHideDuration={5000}
         onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       >
         <Alert onClose={handleClose} severity="success">
-          Signup Successfully
+          Sign up successful
         </Alert>
       </Snackbar>
-      {/* <div>
-        <Backdrop className={classes2.backdrop} open={open}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      </div> */}
+
       <div>
         <Modal
           aria-labelledby="transition-modal-title"
@@ -293,11 +313,27 @@ const UploadCheque = (props) => {
           <Fade in={modalError}>
             <div className={classes2.paper}>
               <h2 id="transition-modal-title">
-                <Alert severity="error">Could not get routing info</Alert>
+                <Alert severity="error">
+                  Unfortunately we couldn't read your cheque image. Please check
+                  the possible reasons below and try again:
+                </Alert>
               </h2>
-              <h2 id="transition-modal-description">
-                Please try again. Make sure the cheque is on a dark background!
-              </h2>
+
+              <ul className={classes.errorList}>
+                <li>Image is not taken on a dark surface</li>
+                <li>
+                  Not a supported file type (we support jpg, png, and pdf files)
+                </li>
+                <li>
+                  Not a supported cheque type (we only support Canadian cheques)
+                </li>
+                <li>Low-resolution image</li>
+                <li>Image is not clear/blurry</li>
+                <li>
+                  There's some kind of obstruction (finger in front of numbers,
+                  light glare, etc)
+                </li>
+              </ul>
             </div>
           </Fade>
         </Modal>

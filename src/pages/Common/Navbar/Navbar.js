@@ -57,27 +57,51 @@ const useStyles = makeStyles((theme) => ({
   },
   anchorList: {
     display: "block",
-    padding: "0px 10px",
+    padding: "0px 20px",
     textDecoration: "none",
     color: "white",
-    fontWeight: "500",
+    fontWeight: "600",
     fontSize: "15px",
   },
   anchorListLogin: {
     display: "block",
-    padding: "0px 20px",
+    paddingLeft: "20px",
+    // paddingRight: "100px",
     textDecoration: "none",
     color: "white",
+    fontWeight: "600",
     fontSize: "15px",
-    fontWeight: "700",
   },
 
   signupButton: {
-    borderRadius: "50px",
-    height: "35px",
-    marginTop: "10px",
+    borderRadius: "5px",
+    marginLeft: "100px",
+    height: "45px",
+    width: "auto",
+    minWidth: "114px",
+    fontWeight: "700",
+    marginTop: "3px",
     backgroundColor: "white",
     color: "#FF0065",
+  },
+  mobileSignupButton: {
+    borderRadius: "5px",
+    // marginLeft: "100px",
+    height: "45px",
+    width: "auto",
+    minWidth: "90px",
+    fontWeight: "700",
+    marginTop: "3px",
+    backgroundColor: "white",
+    color: "#FF0065",
+  },
+
+  signupButtonLink: {
+    fontWeight: "700",
+    marginTop: "3px",
+    backgroundColor: "white",
+    color: "#FF0065",
+    textDecoration: "none",
   },
   mobileMenuButton: {
     borderRadius: "50px",
@@ -179,30 +203,34 @@ export default function Navbar() {
         {!currentUser ? (
           <Grid item xs={5}>
             <Button
-              className={classes.signupButton}
+              className={classes.mobileSignupButton}
               size="small"
               onClick={handleProfileMenuOpen}
               variant="contained"
             >
-              Login
+              <Link to="/login" className={classes.signupButtonLink}>
+                Login
+              </Link>
             </Button>
           </Grid>
         ) : null}
         {!currentUser ? (
           <Grid item xs={5}>
             <Button
-              className={classes.signupButton}
+              className={classes.mobileSignupButton}
               size="small"
               onClick={handleProfileMenuOpen}
               variant="contained"
             >
-              Sign Up
+              <Link to="/signup" className={classes.signupButtonLink}>
+                Sign Up
+              </Link>
             </Button>
           </Grid>
         ) : (
           <Grid item xs={5}>
             <Button
-              className={classes.signupButton}
+              className={classes.mobileSignupButton}
               size="small"
               onClick={handleSignOut}
               variant="contained"
@@ -278,17 +306,13 @@ export default function Navbar() {
           Help
         </Link>
       </li>
-      {/* {!currentUser ? (
+      {!currentUser ? (
         <li>
-          <Link
-            className={classes.anchorListLogin}
-            href="#"
-            onClick={preventDefault}
-          >
+          <Link className={classes.anchorListLogin} to="/login">
             Login
           </Link>
         </li>
-      ) : null} */}
+      ) : null}
     </ul>
   );
 
@@ -318,15 +342,15 @@ export default function Navbar() {
                 Sign Out
               </Button>
             ) : (
-              <Link to="/login" style={{ textDecoration: "none" }}>
-                <Button
-                  className={classes.signupButton}
-                  size="small"
-                  variant="contained"
-                >
-                  Sign In
-                </Button>
-              </Link>
+              <Button
+                className={classes.signupButton}
+                size="small"
+                variant="contained"
+              >
+                <Link to="/signup" className={classes.signupButtonLink}>
+                  Sign Up
+                </Link>
+              </Button>
             )}
           </div>
           <div className={classes.sectionMobile}>
