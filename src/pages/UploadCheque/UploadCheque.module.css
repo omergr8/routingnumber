@@ -1,6 +1,9 @@
 .main {
   margin-top: 100px;
   background-image: url("../../Assets/background.png");
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  background-size: cover;
   padding-bottom: 50px;
   padding-top: 50px;
 }
@@ -72,6 +75,11 @@
 .errorList {
   list-style-type: disc;
   text-align: left !important;
+}
+.cardDiv {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #f4f5f9;
 }
 @media only screen and (max-width: 480px) {
   .dropZone {

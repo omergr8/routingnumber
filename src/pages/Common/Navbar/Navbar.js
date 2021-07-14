@@ -83,6 +83,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "3px",
     backgroundColor: "white",
     color: "#FF0065",
+    "&:hover": {
+      background: "#F9B58A",
+      color: "white",
+    },
   },
   mobileSignupButton: {
     borderRadius: "5px",
@@ -99,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
   signupButtonLink: {
     fontWeight: "700",
     marginTop: "3px",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     color: "#FF0065",
     textDecoration: "none",
   },

@@ -176,11 +176,26 @@ const Routingnumber = () => {
           <Fade in={modalError}>
             <div className={classes2.paper}>
               <h2 id="transition-modal-title">
-                <Alert severity="error">Could not get routing info</Alert>
+                <Alert severity="error">
+                  Unfortunately we couldn't read your cheque image. Please check
+                  the possible reasons below and try again:
+                </Alert>
               </h2>
-              <h2 id="transition-modal-description">
-                Please try again. Make sure the cheque is on a dark background!
-              </h2>
+              <ul className={classes.errorList}>
+                <li>Image is not taken on a dark surface</li>
+                <li>
+                  Not a supported file type (we support jpg, png, and pdf files)
+                </li>
+                <li>
+                  Not a supported cheque type (we only support Canadian cheques)
+                </li>
+                <li>Low-resolution image</li>
+                <li>Image is not clear/blurry</li>
+                <li>
+                  There's some kind of obstruction (finger in front of numbers,
+                  light glare, etc)
+                </li>
+              </ul>
             </div>
           </Fade>
         </Modal>

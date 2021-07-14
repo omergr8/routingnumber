@@ -6,6 +6,7 @@ import axios from "axios";
 import classes from "./UploadCheque.module.css";
 import Firebase from "firebase";
 import { FiUpload } from "react-icons/fi";
+import StepCard from "../Routingnumber/Components/StepCard";
 import {
   Button,
   Snackbar,
@@ -337,6 +338,9 @@ const UploadCheque = (props) => {
             </div>
           </Fade>
         </Modal>
+      </div>
+      <div className={classes.cardDiv}>
+        <StepCard />
       </div>
     </div>
   );

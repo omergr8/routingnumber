@@ -1,6 +1,9 @@
 .main {
   margin-top: 100px;
   background-image: url("../../Assets/background.png");
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  background-size: cover;
   padding-bottom: 50px;
   padding-top: 50px;
 }
